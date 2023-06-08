@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Dog Lovers Template{% endblock %}</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    /* Add custom styles here */
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      overflow-y: scroll; /* Add scrollability to the whole page */
+      background-color: #F4F4F4; /* Light grey */
+    }
+    
+    .navbar {
+      background-color: #333333; /* Dark grey */
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      color: #FFFFFF; /* White */
+    }
+
+    .navbar-nav .nav-link {
+      color: #CCCCCC; /* Medium grey */
+    }
+
+    .footer {
+      background-color: #333333; /* Dark grey */
+      padding: 1px; /* Adjusted padding */
+      text-align: center;
+      color: #FFFFFF; /* White */
+      margin-top: auto; /* Stick the footer at the bottom */
+    }
+
+    .footer img {
+      width: 80px; /* Adjusted width */
+      height: 80px; /* Adjusted height */
+    }
+
+    #background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .container {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+  </style>
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <div class="container">
+      <a class="navbar-brand" href="{% url 'home' %}">Dog Lovers</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signUp' %}">SignUp</a>
+          </li>it
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login'%}">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page content -->
+  <div class="container">
+    {% block content %}
+    <h1>Welcome to Dog Lovers</h1>
+    <p>Discover the world of dogs and find your perfect furry friend.</p>
+    <!-- Add your content here -->
+    {% endblock %}
+  </div>
+
+  <!-- Background -->
+  <canvas id="background"></canvas>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <img src="dog.png" alt="Dog Logo">
+      <p>&copy; 2023 Dog Lovers. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script>
+    // Add JavaScript graphics here
+    const canvas = document.getElementById('background');
+    const ctx = canvas.getContext('2d');
+  
+    let animationFrameId;
+    let width, height;
+  
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+    }
+  
+    function drawBackground() {
+      ctx.clearRect(0, 0, width, height);
+  
+      // Draw animated graphics here
+      const numParticles = 50;
+      const maxRadius = 10;
+  
+      for (let i = 0; i < numParticles; i++) {
+        const x = Math.random() * width;
+        const y = Math.random() * height;
+        const radius = Math.random() * maxRadius;
+        const opacity = Math.random() * 0.2 + 0.5; // Adjust opacity range for darker particles
+  
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI);
+        ctx.fillStyle = `rgba(255, 255, 255, ${opacity})`;
+        ctx.fill();
+      }
+  
+      // Request next frame
+      animationFrameId = requestAnimationFrame(drawBackground);
+    }
+  
+    function stopAnimation() {
+      cancelAnimationFrame(animationFrameId);
+    }
+  
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      stopAnimation();
+      drawBackground();
+    });
+  
+    resizeCanvas();
+    drawBackground();
+  </script>
+</body>
+</html>

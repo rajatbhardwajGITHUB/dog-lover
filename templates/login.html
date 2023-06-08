@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .login-card {
+        background: linear-gradient(to right, #f6f6f6, #e2e2e2);
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        color: #333333;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .form-group label {
+        font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="password"] {
+        background-color: #ffffff;
+        border: 1px solid #cccccc;
+        color: #333333;
+        padding: 8px;
+        margin-bottom: 10px;
+        width: 100%;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="password"]:focus {
+        outline: none;
+        border-color: #009688;
+        box-shadow: 0 0 5px rgba(0, 150, 136, 0.5);
+    }
+
+    .btn-primary {
+        background-color: #009688;
+        border: none;
+        color: #ffffff;
+        padding: 10px;
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    .btn-primary:hover {
+        background-color: #00796b;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .mt-3 {
+        margin-top: 15px;
+    }
+
+    .btn-link {
+        color: #009688;
+        text-decoration: none;
+    }
+
+    .error-message {
+        color: red;
+        margin-top: 5px;
+    }
+
+    .has-error input[type="text"],
+    .has-error input[type="password"] {
+        border-color: red;
+        background-color: #ffe6e6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="login-card">
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Username input -->
+                    <div class="form-group {% if form.username.errors %}has-error{% endif %}">
+                       
+                            
+                        <label for="{{ form.username.id_for_label }}">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                        <div class="error-message">
+                            {% for error in form.username.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Password input -->
+                    <div class="form-group {% if form.password.errors %}has-error{% endif %}">
+                        <label for="{{ form.password.id_for_label }}">Password</label>
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                        <div class="error-message">
+                            {% for error in form.password.errors %}
+                            {{ error }}
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if error_message %}
+                    <div class="error-message">
+                        {{ error_message }}
+                    </div>
+                    {% endif %}
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+<!--
+    <div class="text-center mt-3">
+                    <p>Not a member? <a href="#!" class="btn btn-link">Register</a></p>
+                    <p>or sign up with:</p>
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                    <button type="button" class="btn btn-link btn-floating mx-1">
+                        <i class="fab fa-github"></i>
+                    </button>
+                </div>
+-->
