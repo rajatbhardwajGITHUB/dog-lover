@@ -1,0 +1,18 @@
+# Django
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+*.db
+*.log
+*.pot
+*.pyc
+*.swp
+*.swo
+*.coverage
+.coverage
+htmlcov/
+
+.env
+

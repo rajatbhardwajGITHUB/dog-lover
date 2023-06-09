@@ -71,12 +71,22 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'home' %}">Home</a>
           </li>
+          {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+
+
+          {%else%}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'signUp' %}">SignUp</a>
-          </li>it
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'login'%}">Login</a>
           </li>
+
+          {% endif%}
+          
         </ul>
       </div>
     </div>
@@ -90,6 +100,7 @@
     <!-- Add your content here -->
     {% endblock %}
   </div>
+ 
 
   <!-- Background -->
   <canvas id="background"></canvas>

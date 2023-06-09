@@ -67,59 +67,69 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-6">
-                <div class="signup-card">
-                    <h2>Sign Up</h2>
-                    <form method="post">
-                        {% csrf_token %}
-                        <!-- Name input-->
-                        <div class="form-group">
-                            {{ form.name.label_tag }}
-                            {{ form.name }}
-                            {{ form.name.errors }}
+{% if user.is_authenticated %}
+    <h1>Already Logged in {{user.username}}</h1>
+{% else %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="signup-card">
+                <h2>Sign Up</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        {{ form.name.label_tag }}
+                        {{ form.name }}
+                        {{ form.name.errors }}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {{ form.email.errors }}
+                    </div>
+                    
+                    <div class="form-group">
+                        {{ form.password.label_tag }}
+                        {{ form.password }}
+                        {{ form.password.errors }}
+                    </div>
+                    
+                    <div class="row mb-4">
+                        <div class="col">
+                            <a href="#!">Forgot password?</a>
                         </div>
-                        <!-- Email input -->
-                        <div class="form-group">
-                            {{ form.email.label_tag }}
-                            {{ form.email }}
-                            {{ form.email.errors }}
-                        </div>
-                        <!-- Password input -->
-                        <div class="form-group">
-                            {{ form.password.label_tag }}
-                            {{ form.password }}
-                            {{ form.password.errors }}
-                        </div>
-                        <!-- Checkbox and forgot password -->
-                        <div class="row mb-4">
-                            <div class="col">
-                                <a href="#!">Forgot password?</a>
-                            </div>
-                        </div>
-                        <!-- Submit button -->
-                        <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-                        <!-- Register buttons -->
-                        <div class="text-center mt-3">
-                            <p>Already a member? <a href="#!" class="btn btn-link">Log In</a></p>
-                            <p>or sign up with:</p>
-                            <button type="button" class="btn btn-link btn-floating mx-1">
-                                <i class="fab fa-facebook-f"></i>
-                            </button>
-                            <button type="button" class="btn btn-link btn-floating mx-1">
-                                <i class="fab fa-google"></i>
-                            </button>
-                            <button type="button" class="btn btn-link btn-floating mx-1">
-                                <i class="fab fa-twitter"></i>
-                            </button>
-                            <button type="button" class="btn btn-link btn-floating mx-1">
-                                <i class="fab fa-github"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    
+                    <div class="text-center mt-3">
+                        <p>Already a member? <a href="#!" class="btn btn-link">Log In</a></p>
+                        <p>or sign up with:</p>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-twitter"></i>
+                        </button>
+                        <button type="button" class="btn btn-link btn-floating mx-1">
+                            <i class="fab fa-github"></i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
+{% endif %}   
 {% endblock %}
+
+<!--
+
+     
+-->
