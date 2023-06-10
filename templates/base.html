@@ -75,6 +75,9 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
           </li>
+          
+
+
 
 
           {%else%}
@@ -95,9 +98,7 @@
   <!-- Page content -->
   <div class="container">
     {% block content %}
-    <h1>Welcome to Dog Lovers</h1>
-    <p>Discover the world of dogs and find your perfect furry friend.</p>
-    <!-- Add your content here -->
+   
     {% endblock %}
   </div>
  
@@ -164,9 +165,35 @@
       stopAnimation();
       drawBackground();
     });
+    
+    function logout() {
+      var form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '';  // Replace with your logout URL
+    
+      var csrftoken = getCookie('csrftoken');
+      var csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = csrftoken;
+    
+      form.appendChild(csrfInput);
+      document.body.appendChild(form);
+    
+      form.submit();
+    }
+    
+    
+    
+    // Call the logout function when the logout button is clicked
+    //document.getElementById('logout-button').addEventListener('click', logout);
+    
+    
+  
   
     resizeCanvas();
     drawBackground();
   </script>
 </body>
 </html>
+ 

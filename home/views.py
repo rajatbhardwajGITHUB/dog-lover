@@ -2,9 +2,10 @@ from django.shortcuts import render,redirect, get_object_or_404
 from .forms import basic_info_form, loginForm, signUp
 from .models import Users_info, Dog, Users
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.http import HttpResponseNotAllowed
 # Create your views here.
 
 def index(request):
@@ -37,6 +38,7 @@ def loginUser(request):
 
         # Authenticate the user
             user = authenticate(request, username=username, password=password)
+            request.session.set_expiry(60)
             
             
             if user is not None:
@@ -44,7 +46,7 @@ def loginUser(request):
             # User is authenticated, log them in
                 
                 login(request, user)
-                return redirect('dashboard')
+                return redirect('profile')
             else:
             # Invalid credentials, show error message
                 error_message = 'Invalid user credentials'
@@ -80,11 +82,25 @@ def signup(request):
     return render(request, 'signUp.html',{"form":form})
 
 @login_required
-def dashboard(request):
+def profile(request):
     user = request.user
     username = user.username
     email = user.email
 
-    return render(request, 'dashboard.html', {'username': username, 'email' : email})
+    return render(request, 'profile.html', {'username': username, 'email' : email})
+
+def logout_user(request):
+    if request.method == 'POST':
+        # Clear session data
+        request.session.flush()
+        return redirect('home')
+    elif request.method == 'GET':
+        return render(request, "login.html")
+    else:
+        return HttpResponseNotAllowed(['POST','GET'])
+    
+
+
+
 
   

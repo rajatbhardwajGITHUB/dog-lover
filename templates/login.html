@@ -83,6 +83,11 @@ Login
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="login-card">
+                {% if user.is_authenticated%}
+
+                    <h1> Already LoggedIn {{user.username}}</h1>
+
+                {% else %}
                 <form method="post">
                     {% csrf_token %}
                     <!-- Username input -->
@@ -122,10 +127,17 @@ Login
                     <!-- Submit button -->
                     <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                 </form>
+
+
+                {%endif%}
+                
             </div>
         </div>
     </div>
 </div>
+<!--
+    
+-->
 
 
 {% endblock %}
