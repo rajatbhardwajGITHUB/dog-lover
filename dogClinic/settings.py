@@ -129,3 +129,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # added manually
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_AGE = 86400  # Set the session cookie age to a desired value (in seconds), e.g., 24 hours
+
+# smtp setup for sending emails
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'rajat.tiggit@gmail.com'
+EMAIL_HOST_PASSWORD = 'drbivpbfalmwwicr'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'rajat.tiggit@gmail.com'

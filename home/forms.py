@@ -31,3 +31,5 @@ class signUp(forms.Form):
         users = Users
         fields = ["uName","uEmail","uPass"]
 
+class forgotPasswordForm(forms.Form):
+    mail = forms.EmailField(label="email", required=True)

@@ -1,11 +1,13 @@
 from django.shortcuts import render,redirect, get_object_or_404
-from .forms import basic_info_form, loginForm, signUp
+from .forms import basic_info_form, loginForm, signUp, forgotPasswordForm
 from .models import Users_info, Dog, Users
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.http import HttpResponseNotAllowed
+from django.contrib import messages
+from django.core.mail import send_mail
 # Create your views here.
 
 def index(request):
@@ -98,6 +100,31 @@ def logout_user(request):
         return render(request, "login.html")
     else:
         return HttpResponseNotAllowed(['POST','GET'])
+    
+def forgot_password(request):
+    form = forgotPasswordForm()
+    if request.method == "POST":
+        form = forgotPasswordForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['mail']
+            confirmedMail = emailCheck(email)
+            if confirmedMail:
+                subject = "change Password"
+                message = "not now but soon"
+                fromEmail = "rajat.tiggit@gmail.com"
+                recipient_list = [email]
+                send_mail(subject, message, fromEmail, recipient_list)
+                return render(request, 'example.html',{"message":"found"})
+            else:
+                return render(request, 'example.html',{"message":"notfound email not found"})
+            return redirect('home')
+    else:
+        form = forgotPasswordForm()
+    return render(request, 'forgotPassword.html', {'form':form})
+
+def emailCheck(email):
+    return User.objects.filter(email=email).exists()
+
     
 
 
